@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             direction: rtl;
+            overflow-x: hidden;
         }
         .container {
             display: flex;
@@ -21,13 +22,14 @@
         .top-section {
             flex: 1;
             background-image: url('banar.jpg'); /* ضع رابط صورة البراند هنا */
-            background-size: cover; /* تغطي المنطقة بالكامل */
+            background-size: cover; /* تظهر الصورة بالكامل */
+            background-repeat: no-repeat; /* منع تكرار الصورة */
             background-position: center;
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 50vh; /* تأخذ نصف الشاشة */
+            width: 100%; /* عرض الصفحة بالكامل */
         }
         .bottom-section {
             flex: 1;
@@ -38,6 +40,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
         .social-buttons {
             display: flex;
@@ -48,60 +51,77 @@
         }
         .social-buttons a {
             text-decoration: none;
+            font-size: 50px; /* زيادة حجم الأيقونات */
             color: #000;
             margin: 10px; /* إضافة هامش بين الأيقونات */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-        .social-buttons a i {
-            font-size: 50px; /* زيادة حجم الأيقونات */
-        }
-        .social-buttons a span {
-            margin-top: 5px;
-            font-size: 16px; /* حجم النص فوق الأيقونات */
-        }
-        .social-buttons a:hover i {
+        .social-buttons a:hover {
             color: #007bff;
         }
-
         .follow-us-text {
             font-size: 36px;
             margin-bottom: 20px;
         }
+        .social-buttons div {
+            text-align: center;
+        }
+        .social-buttons div span {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        /* تأثيرات احتفالية */
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .confetti span {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            animation: fall 3s infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
         /* ريسبونسف للموبايل */
         @media (max-width: 768px) {
-            .top-section {
-                height: 40vh; /* تقليل الارتفاع في الشاشات المتوسطة */
-            }
-
             .follow-us-text {
                 font-size: 28px;
             }
 
-            .social-buttons a i {
+            .social-buttons a {
                 font-size: 60px; /* تكبير الأيقونات على الشاشات الصغيرة */
             }
         }
 
         @media (max-width: 480px) {
-            .top-section {
-                height: 30vh; /* تقليل الارتفاع أكثر في الشاشات الصغيرة */
-            }
-
             .follow-us-text {
                 font-size: 24px;
             }
 
-            .social-buttons a i {
+            .social-buttons a {
                 font-size: 70px; /* تكبير الأيقونات أكثر */
             }
 
             .social-buttons {
-                flex-direction: row; /* التأكد من عرض الأيقونات أفقيًا */
-                justify-content: space-between; /* توزيع الأيقونات بالتساوي */
-                width: 100%;
+                flex-direction: column; /* ترتيب الأيقونات عموديًا */
+                align-items: center; /* محاذاة الأيقونات إلى الوسط */
             }
         }
     </style>
@@ -111,32 +131,47 @@
     <div class="container">
         <!-- الجزء العلوي الذي يحتوي على صورة البراند -->
         <div class="top-section">
-            <!-- الصورة ستغطى بالكامل وتأخذ نصف الشاشة -->
+            <!-- الصورة ستظهر بالكامل وتأخذ عرض الصفحة بالكامل -->
         </div>
 
         <!-- الجزء السفلي يحتوي على الأزرار -->
         <div class="bottom-section">
             <div class="follow-us-text">Follow us in Social Media</div>
             <div class="social-buttons">
-                <a href="https://cristil-store-s2bqk60.gamma.site" target="_blank">
-                    <i class="fas fa-globe"></i>
+                <div>
                     <span>Website</span>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=100056813367252" target="_blank">
-                    <i class="fab fa-facebook"></i>
+                    <a href="https://cristil-store-s2bqk60.gamma.site" target="_blank"><i class="fas fa-globe"></i></a>
+                </div>
+                <div>
                     <span>Facebook</span>
-                </a>
-                <a href="https://www.instagram.com/cristil_store15_8/" target="_blank">
-                    <i class="fab fa-instagram"></i>
+                    <a href="https://www.facebook.com/profile.php?id=100056813367252" target="_blank"><i class="fab fa-facebook"></i></a>
+                </div>
+                <div>
                     <span>Instagram</span>
-                </a>
-                <a href="https://wa.me/201091001890" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://www.instagram.com/cristil_store15_8/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div>
                     <span>WhatsApp</span>
-                </a>
+                    <a href="https://wa.me/201091001890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="confetti">
+                <!-- العناصر الاحتفالية -->
             </div>
         </div>
     </div>
+
+    <script>
+        // إنشاء تأثير الاحتفال عند تحميل الصفحة
+        const confettiContainer = document.querySelector('.confetti');
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('span');
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+            confettiContainer.appendChild(confetti);
+        }
+    </script>
 
 </body>
 </html>
