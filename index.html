@@ -129,14 +129,38 @@
         #welcome-message {
             position: fixed;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            right: -100%; /* بداية الرسالة خارج الشاشة من اليمين */
+            transform: translateY(0);
             font-size: 24px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
             z-index: 1000;
-            display: none;
+            display: block;
+            animation: slideIn 3s ease-in-out forwards, slideOut 2s 3s ease-in-out forwards;
+        }
+
+        /* حركة الرسالة من اليمين إلى اليسار */
+        @keyframes slideIn {
+            0% {
+                right: -100%; /* خارج الشاشة من اليمين */
+            }
+            50% {
+                right: 50%; /* في المنتصف */
+            }
+            100% {
+                right: 0%; /* الرسالة في المكان النهائي */
+            }
+        }
+
+        /* اختفاء الرسالة بعد فترة */
+        @keyframes slideOut {
+            0% {
+                right: 0%; /* الرسالة في مكانها النهائي */
+            }
+            100% {
+                right: -100%; /* تختفي الرسالة خارج الشاشة من اليسار */
+            }
         }
     </style>
 </head>
@@ -195,7 +219,7 @@
         welcomeMessage.style.display = 'block';
         setTimeout(() => {
             welcomeMessage.style.display = 'none';
-        }, 2000);  // تختفي بعد 2 ثانية
+        }, 9000);  // تختفي بعد 9 ثوانٍ
 
         // العد التنازلي
         const countdownElement = document.getElementById('countdown');
@@ -219,8 +243,6 @@
         }
     
         const interval = setInterval(updateCountdown, 1000);
-        updateCountdown();
     </script>
-    
 </body>
 </html>
