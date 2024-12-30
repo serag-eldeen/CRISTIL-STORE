@@ -162,6 +162,50 @@
                 right: -100%; /* تختفي الرسالة خارج الشاشة من اليسار */
             }
         }
+
+        /* صورة انفجار boomb */
+        #boombImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            display: none;
+            animation: boomEffect 2s forwards;
+        }
+
+        @keyframes boomEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(1); /* بداية الصورة بالحجم الطبيعي */
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(3); /* تكبير الصورة */
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0); /* تصغير الصورة حتى تختفي */
+                opacity: 0;
+            }
+        }
+
+        /* رسالة رأس السنة */
+        #new-year-message {
+            font-size: 28px;
+            font-weight: bold;
+            color: #FF5733;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* الرسالة الخاصة بحملة السحب */
+        #raffle-message {
+            font-size: 22px;
+            color: #007bff;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -197,6 +241,9 @@
                 <!-- العناصر الاحتفالية -->
             </div>
             <div id="countdown" style="font-size: 28px; font-weight: bold; margin-top: 10px; text-align: center;"></div>
+            <div id="new-year-message"></div>
+            <div id="raffle-message"></div>
+            <img id="boombImage" src="boomb.png" alt="Boom">
         </div>
     </div>
 
@@ -219,30 +266,39 @@
         welcomeMessage.style.display = 'block';
         setTimeout(() => {
             welcomeMessage.style.display = 'none';
-        }, 9000);  // تختفي بعد 9 ثوانٍ
+        }, 9000);
 
-        // العد التنازلي
+        // تفعيل العد التنازلي
         const countdownElement = document.getElementById('countdown');
-        const newYear = new Date('2024-12-31T23:59:59').getTime();
-    
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = newYear - now;
-    
-            if (diff <= 0) {
-                countdownElement.innerHTML = '🎉 Happy New Year! 🎉';
+        const newYearMessage = document.getElementById('new-year-message');
+        const raffleMessage = document.getElementById('raffle-message');
+        const boombImage = document.getElementById('boombImage');
+
+        let countdownDate = new Date('January 1, 2025 00:00:00').getTime();
+
+        let interval = setInterval(function() {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
                 clearInterval(interval);
-            } else {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-                countdownElement.innerHTML = `🕒 ${days}d ${hours}h ${minutes}m ${seconds}s left!`;
+                countdownElement.innerHTML = 'Happy New Year! <br> الحقي السحب واكسبي معانا🙈❤️';
+                newYearMessage.style.display = 'block';
+                raffleMessage.style.display = 'block';
+                boombImage.style.display = 'block'; // يظهر صورة الانفجار عند نهاية العد التنازلي
+                setTimeout(() => {
+                    boombImage.style.display = 'none'; // تختفي بعد نهاية الحركة
+                }, 4000);
             }
-        }
-    
-        const interval = setInterval(updateCountdown, 1000);
+        }, 1000);
     </script>
+
 </body>
 </html>
